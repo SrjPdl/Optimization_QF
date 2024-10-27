@@ -67,19 +67,28 @@ def quasi_newton_method(x_0, f, f_p, f_pp, delta1=1e-3, delta2=1e-3, max_iter=10
   return x, f(x), errors, function_values
 
 
-def adam_optimizer(
-    x_0,
-    f,              
-    f_p,         
-    f_pp,
-    delta_1 = None,  # not used
-    delta_2 =None, # not used
-    beta1=0.9,
-    beta2=0.999,           
-    learning_rate=0.001,
-    epsilon=1e-8,
-    max_iters=1000,
-    tol=1e-6,
-    check_domain = False
-):
-   pass
+def adam_optimizer(x_0, f, f_p, f_pp, delta1=None, delta2=None, beta1=0.9, beta2=0.999, alpha=0.001, epsilon=1e-8, max_iters=6000, tol=1e-4, check_domain=False):
+    x = x_0.astype(float)
+    M = np.zeros_like(x, dtype=float)
+    V = np.zeros_like(x, dtype=float)
+    errors = []
+    function_values = []
+    for i in range(1, max_iters+1):
+        function_values.append(f(x)[0])
+        x_old = x.copy()
+        grad = f_p(x)
+
+        M = beta1 * M + (1 - beta1) * grad
+        V = beta2 * V + (1 - beta2) * (grad ** 2)
+
+        M_hat = M / (1 - beta1 ** i)
+        V_hat = V / (1 - beta2 ** i)
+
+        alpha_t = alpha * np.sqrt(1 - beta2 ** i) / (1 - beta1 ** i)
+        x -= alpha_t * M_hat / (np.sqrt(V_hat) + epsilon)
+        errors.append(np.linalg.norm(f(x) - f(x_old)))
+
+        if errors[-1] < tol:
+            break
+
+    return x, f(x), errors, function_values

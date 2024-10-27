@@ -16,22 +16,22 @@ def main():
         (Quadratic, gradient_descent),
         (Quadratic, newton_method),
         (Quadratic, quasi_newton_method),
-        #TODO: for bonus
-        # (Quadratic, adam_optimizer),
+        # Bonus
+        (Quadratic, adam_optimizer),
 
 
         (LogBarrier, gradient_descent),
         (LogBarrier, newton_method),
         (LogBarrier, quasi_newton_method),
-        #TODO: for bonus
-        # (LogBarrier, adam_optimizer),
+        # Bonus
+        (LogBarrier, adam_optimizer),
 
 
         (Rosenbrock, gradient_descent),
         (Rosenbrock, newton_method),
         (Rosenbrock, quasi_newton_method),
-        #TODO: for bonus
-        # (Rosenbrock, adam_optimizer),
+        # Bonus
+        (Rosenbrock, adam_optimizer),
 
     ]
 
