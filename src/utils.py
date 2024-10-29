@@ -17,7 +17,7 @@ def back_tracking_line_search(x, p, f, f_p, alpha=1, c=0.1, rho=0.5, check_domai
     return alpha
 
 def isin_domain(x):
-    return np.all(log_barrier.b - np.dot(log_barrier.A, x) >= 0)
+    return np.all(log_barrier.b - np.dot(log_barrier.A, x) > 0)
 
 
 def plot_error_curve(error, func_name, method_name, curves_path):
